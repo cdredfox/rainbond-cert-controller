@@ -44,10 +44,10 @@ func main() {
 
 	for _, gwRule := range gwRules {
 		if gwRule.AutoSsl == true {
-			var needRequestCert bool = false
-			var existCert *rainbond.CertificatesR = nil
+			var needRequestCert bool
+			var existCert *rainbond.CertificatesR
 			teamCertInfo, ok := allTeamCertInfo[gwRule.TeamName]
-			var certID int32 = 0
+			var certID int32
 			if !ok {
 				logrus.Info(fmt.Printf("team %s has no certs", gwRule.TeamName))
 				needRequestCert = true
@@ -55,11 +55,15 @@ func main() {
 				existCert = getExistCert(gwRule.DomainName, teamCertInfo)
 				if existCert != nil {
 					certID = existCert.Id
-					timeExpire, err := time.Parse("2006-01-02T15:04:05", existCert.EndData)
+					timeExpire, err := time.Parse("2006-01-02 15:04:05", existCert.EndData)
 					if err != nil {
-						logrus.Error("parse cert expire error " + err.Error())
-						needRequestCert = true
-					} else if timeExpire.Unix()-time.Now().Unix() < int64(30*86400) { // renew in 30 days
+						timeExpire, err = time.Parse("2006-01-02T15:04:05", existCert.EndData)
+						if err != nil {
+							logrus.Error("parse cert expire error " + err.Error())
+							continue
+						}
+					}
+					if !timeExpire.IsZero() && timeExpire.Unix()-time.Now().Unix() < int64(30*86400) { // renew in 30 days
 						needRequestCert = true
 					}
 				} else {
