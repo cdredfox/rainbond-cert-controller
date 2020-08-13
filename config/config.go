@@ -27,7 +27,8 @@ var once sync.Once
 var Cfg = &Config{}
 
 type Rainbond struct {
-	ApiKey string `json:"api_key"`
+	ApiKey   string `json:"api_key"`
+	BasePath string `json:"base_path"`
 }
 
 type Acme struct {
