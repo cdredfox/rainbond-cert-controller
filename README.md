@@ -33,6 +33,7 @@
 以下为环境变量
 
 ```
+RAINBOND_OPENAPI_URL openapi base path
 RAINBOND_API_KEY rainbond openapi key
 ACME_EMAIL let's encrypt email
 ACME_KEY_TYPE 可选，默认为RSA4096
