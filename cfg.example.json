@@ -1,6 +1,7 @@
 {
     "rainbond": {
-        "api_key": "${RAINBOND_API_KEY}"
+        "api_key": "${RAINBOND_API_KEY}",
+        "base_path": "${RAINBOND_OPENAPI_URL:https://cloud.goodrain.com}"
     },
     "acme": {
         "email": "${ACME_EMAIL}",

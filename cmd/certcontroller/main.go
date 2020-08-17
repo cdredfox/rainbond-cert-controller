@@ -20,7 +20,9 @@ func init() {
 }
 
 func main() {
-	rainbond_client := rainbond.NewAPIClient(rainbond.NewConfiguration())
+	clientCfg := rainbond.NewConfiguration()
+	clientCfg.BasePath = config.Cfg.Rainbond.BasePath
+	rainbond_client := rainbond.NewAPIClient(clientCfg)
 	ctx := context.WithValue(context.Background(), rainbond.ContextAPIKey, rainbond.APIKey{
 		Key: config.Cfg.Rainbond.ApiKey,
 	})
