@@ -47,6 +47,7 @@ docker run参考
 
 ```
 docker run --rm -e ACME_EMAIL=luxingmin@hongyaa.com.cn \
+-e RAINBOND_OPENAPI_URL=<Rainbond控制台访问地址> \
 -e RAINBOND_API_KEY=xxx \
 -e DINGTALK_AK=xxx \
 -e DINGTALK_SK=xxx \
