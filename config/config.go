@@ -71,13 +71,17 @@ func Load() {
 }
 
 func loadSSLAuthFromRainbond() {
-	client := rainbond.NewAPIClient(rainbond.NewConfiguration())
+	clientCfg := rainbond.NewConfiguration()
+	clientCfg.BasePath = Cfg.Rainbond.BasePath
+	client := rainbond.NewAPIClient(clientCfg)
+
 	ctx := context.WithValue(context.Background(), rainbond.ContextAPIKey, rainbond.APIKey{
 		Key: Cfg.Rainbond.ApiKey,
 	})
 	ret, _, err := client.OpenapiEntrepriseApi.OpenapiV1ConfigsList(ctx)
 	if err != nil {
-		logrus.Error("load ssl auto info from rainbond with error " + err.Error())
+		gerr := err.(rainbond.GenericSwaggerError)
+		logrus.Error("load ssl auto info from rainbond with error " + err.Error() + string(gerr.Body()))
 		return
 	}
 	if err := json.Unmarshal([]byte(ret.AutoSsl.Value), &(Cfg.AuthList)); err != nil {
