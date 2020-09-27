@@ -46,6 +46,10 @@ func main() {
 
 	for _, gwRule := range gwRules {
 		if gwRule.AutoSsl == true {
+			if gwRule.AutoSslConfig == "" {
+				logrus.Warningf("domain %s open auto ssl but not provider config ", gwRule.DomainName)
+				continue
+			}
 			var needRequestCert bool
 			var existCert *rainbond.CertificatesR
 			teamCertInfo, ok := allTeamCertInfo[gwRule.TeamName]
