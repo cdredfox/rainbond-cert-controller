@@ -1,11 +1,13 @@
 package acmeaccount
 
 import (
+	"log"
 	"os"
 	"strings"
-	"github.com/go-acme/lego/v3/certcrypto"
-	"log"
+
+	"github.com/go-acme/lego/v4/certcrypto"
 )
+
 const filePerm os.FileMode = 0600
 
 func createNonExistingFolder(path string) error {

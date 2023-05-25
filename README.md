@@ -1,5 +1,7 @@
 # rainbond-cert-controller
 
+got get -u github.com/go-acme/lego/v4/cmd/lego@v4.11.0
+
 用于自动化申请rainbond集群https策略证书
 
 ## 参数配置

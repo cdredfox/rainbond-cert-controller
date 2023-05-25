@@ -20,6 +20,7 @@ func init() {
 }
 
 func main() {
+	fmt.Println("begin...")
 	clientCfg := rainbond.NewConfiguration()
 	clientCfg.BasePath = config.Cfg.Rainbond.BasePath
 	rainbond_client := rainbond.NewAPIClient(clientCfg)
@@ -43,7 +44,7 @@ func main() {
 	for _, tenant := range tenants {
 		allTeamCertInfo[tenant.TenantName] = rainbondutils.ListTeamCerts(rainbond_client, ctx, tenant)
 	}
-
+	fmt.Println(allTeamCertInfo)
 	for _, gwRule := range gwRules {
 		if gwRule.AutoSsl == true {
 			if gwRule.AutoSslConfig == "" {
@@ -87,7 +88,7 @@ func main() {
 					notify.SendNotify("default", msg)
 					continue
 				}
-
+				fmt.Println(certResource)
 				rainbondCertInfo, _, err := rainbondutils.UpdateOrCreateTeamCert(rainbond_client, ctx, gwRule.TenantId, existCert, certResource)
 				if err != nil {
 					msg := fmt.Sprintf("UpdateOrCreateTeamCert for domain %s err %s", gwRule.DomainName, err.Error())

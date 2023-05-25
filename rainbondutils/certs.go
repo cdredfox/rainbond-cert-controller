@@ -7,7 +7,7 @@ import (
 	"net/http"
 
 	"github.com/antihax/optional"
-	"github.com/go-acme/lego/v3/certificate"
+	"github.com/go-acme/lego/v4/certificate"
 	rainbond "github.com/goodrain/openapi-go"
 )
 
@@ -55,7 +55,7 @@ func UpdateOrCreateTeamCert(client *rainbond.APIClient, ctx context.Context, ten
 		return client.OpenapiTeamApi.OpenapiV1TeamsCertificatesUpdate(ctx, fmt.Sprintf("%d", teamCert.Id), tenantId, teamCertData)
 	} else {
 		fmt.Println("create cert")
-		// fmt.Println(teamCertData)
+		//fmt.Println(teamCertData)
 		return client.OpenapiTeamApi.OpenapiV1TeamsCertificatesCreate(ctx, tenantId, teamCertData)
 	}
 }

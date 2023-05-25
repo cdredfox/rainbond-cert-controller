@@ -7,12 +7,12 @@ import (
 	"os"
 	"time"
 
-	"github.com/go-acme/lego/v3/certcrypto"
-	"github.com/go-acme/lego/v3/certificate"
-	"github.com/go-acme/lego/v3/challenge/dns01"
-	"github.com/go-acme/lego/v3/lego"
-	"github.com/go-acme/lego/v3/providers/dns"
-	"github.com/go-acme/lego/v3/registration"
+	"github.com/go-acme/lego/v4/certcrypto"
+	"github.com/go-acme/lego/v4/certificate"
+	"github.com/go-acme/lego/v4/challenge/dns01"
+	"github.com/go-acme/lego/v4/lego"
+	"github.com/go-acme/lego/v4/providers/dns"
+	"github.com/go-acme/lego/v4/registration"
 	"github.com/hongyaa-tech/rainbond-cert-controller/acmeaccount"
 	"github.com/hongyaa-tech/rainbond-cert-controller/config"
 	"github.com/sirupsen/logrus"
@@ -42,6 +42,7 @@ func RequestCert(domain, domainAuthName string) (*certificate.Resource, error) {
 		return nil, err
 	}
 	domainAuth, ok := config.Cfg.AuthList[domainAuthName]
+	fmt.Println(domainAuthName)
 	if !ok {
 		fmt.Println("auth info not found")
 		return nil, errors.New("auth info not found")
@@ -51,6 +52,8 @@ func RequestCert(domain, domainAuthName string) (*certificate.Resource, error) {
 		logrus.Info("set env\t", envName, envVal)
 		os.Setenv(envName, envVal)
 	}
+
+	//provider, err := tencentcloud.NewDNSProvider()
 	provider, err := dns.NewDNSChallengeProviderByName(domainAuth.Provider)
 
 	if err != nil {
@@ -75,7 +78,8 @@ func RequestCert(domain, domainAuthName string) (*certificate.Resource, error) {
 		return nil, err
 	}
 	// jsonStr, err := json.Marshal(certificates)
+	//fmt.Println(string(certificates.Certificate))
+	//fmt.Println(string(certificates.PrivateKey))
 	return certificates, nil
-	// fmt.Println(string(certificates.Certificate))
-	// fmt.Println(string(certificates.PrivateKey))
+
 }
